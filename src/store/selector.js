@@ -7,3 +7,7 @@ export const selectDevelopersFavoritesResources = (developerId) => (state) => {
     return developer.favorites.includes(resource.id);
   });
 };
+
+export const selectLoggedinUser = (state) => {
+  return state.developers.find((dev) => dev.id === state.user.id);
+};

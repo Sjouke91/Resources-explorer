@@ -1,7 +1,7 @@
 const initialState = [
   {
     id: 1,
-    name: "Kelley",
+    name: "Sjouke",
     website: "https://hi-im-kelley.netlify.com",
     favorites: [2, 3, 4, 5],
   },
@@ -19,8 +19,31 @@ const initialState = [
   },
 ];
 
+function toggle(list, element) {
+  if (list.includes(element)) {
+    return list.filter((el) => el !== element);
+  } else {
+    return [...list, element];
+  }
+}
+
 export default function developersSliceReducer(state = initialState, action) {
   switch (action.type) {
+    case "TOGGLE_FAVORITE_RESOURCE": {
+      const { userId, resourceId } = action.payload;
+      console.log("in reducer", userId, resourceId);
+      return state.map((developer) => {
+        if (developer.id === userId) {
+          return {
+            ...developer,
+            favorites: toggle(developer.favorites, resourceId),
+          };
+        } else {
+          return developer;
+        }
+      });
+    }
+
     default: {
       return state;
     }

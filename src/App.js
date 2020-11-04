@@ -7,12 +7,17 @@ import {
   developersWithThisFavorite,
 } from "./store/developers/selectors";
 import { selectResources } from "./store/resources/selectors";
-import { selectDevelopersFavoritesResources } from "./store/selector";
+import {
+  selectDevelopersFavoritesResources,
+  selectLoggedinUser,
+} from "./store/selector";
+import ResourcesSection from "./Components/ResourcesSection";
 
 function App() {
   const statistics = useSelector(selectStatistics);
   const developers = useSelector(selectDevelopers);
   const resources = useSelector(selectResources);
+  const loggedinUser = useSelector(selectLoggedinUser);
 
   const [favoriteId, setFavoriteId] = useState(2);
   const [selectedDev, setSelectedDev] = useState(1);
@@ -24,8 +29,6 @@ function App() {
   const developersFavorites = useSelector(
     selectDevelopersFavoritesResources(selectedDev)
   );
-
-  console.log(developersFavorites);
 
   // const selectDevelopersFavoritesResources = useSelector((state) => {
   //   const selectedDeveloper = state.developers.find(
@@ -42,6 +45,15 @@ function App() {
 
   return (
     <div className="App">
+      <p
+        style={{
+          margin: "1rem 0 2rem 0",
+          padding: "0.5rem",
+          background: "#eee",
+        }}
+      >
+        Welcome back, <strong>{loggedinUser.name}</strong>!
+      </p>
       <h1>Web development resources</h1>
       <div>
         {statistics.numDevelopers}
@@ -93,6 +105,7 @@ function App() {
           return <li key={dev.id}>{dev.name}</li>;
         })}
       </ul>
+      <ResourcesSection />
     </div>
   );
 }
